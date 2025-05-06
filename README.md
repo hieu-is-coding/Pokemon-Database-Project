@@ -1,1 +1,161 @@
-# Pokemon-Database-Project
+# 📌 Project Title  
+**Simple Pokemon Database Project**
+
+## 📄 Brief Description  
+This project involves the conceptualization and implementation of a foundational Information System solution, developed from the perspective of a Database Developer. The system focuses on managing a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
+
+It solves the problem of needing a straightforward tool to view, add, modify, and remove Pokemon entries without directly interacting with the database via complex queries, while adhering to database design and implementation best practices.
+
+---
+
+## 🎯 Functional & Non-functional Requirements  
+
+### **Functional Requirements**
+
+#### Entities Management (CRUD)
+- **Create**: Add new Pokemon entries (name, HP, attack, defense) via a validated web form.  
+- **Read**: View all Pokemon in a sortable/filterable table (ID, name, HP, attack, defense).  
+- **Update**: Edit Pokemon details through the interface.  
+- **Delete**: Remove Pokemon records with confirmation.  
+
+#### Analytics and Reporting (Basic)
+- At least one **VIEW** to show aggregated/specific data (e.g., Pokemon above a certain attack threshold, total count).
+- _(Future Scope)_ Basic statistics tracking (e.g., average stats), and basic web-based visualizations.
+
+#### Database Features
+- At least **two STORED PROCEDURES** (e.g., add/update Pokemon).
+- At least **one TRIGGER** for audit logging or validation.
+- _(Future Scope)_ Authentication and **Role-Based Access Control**.
+
+### **Non-functional Requirements**
+
+- **Usability**: Clean, intuitive, user-friendly interface.  
+- **Performance**: Fast operations; use of **INDEXING** for optimization.  
+- **Reliability**: Graceful error handling, data integrity via constraints.  
+- **Maintainability**: Well-structured and commented code with version control (Git/GitHub).  
+- **Security**:
+  - Input validation (client + server).
+  - Use **prepared statements** to prevent SQL injection.
+  - _(Course Req)_ Define MySQL user roles (e.g., `app_user`, `admin_user`) with least privilege.  
+  - If authentication is added: encrypt sensitive data.
+
+- **Database Standards**: Use MySQL-specific features (SPs, Triggers).  
+- **Normalization**: Aim for **Third Normal Form (3NF)**.  
+- **Reproducibility**: Clear documentation for easy setup and testing.
+
+---
+
+## 🧱 Planned Core Entities
+
+> _(Initial design includes 1 entity. 4 more entities will be added to satisfy 3NF requirement.)_
+
+### **Pokemon** (Primary Entity)
+| Field       | Type                      | Description                                |
+|-------------|---------------------------|--------------------------------------------|
+| id          | INT, PK, AUTO_INCREMENT    | Unique identifier                          |
+| name        | VARCHAR(100), NOT NULL, UQ| Pokemon name                               |
+| hp          | INT, NOT NULL             | Hit Points stat                            |
+| attack      | INT, NOT NULL             | Attack stat                                |
+| defense     | INT, NOT NULL             | Defense stat                               |
+| created_at  | TIMESTAMP, DEFAULT NOW()  | Created timestamp                          |
+| updated_at  | TIMESTAMP, AUTO-UPDATE    | Last modified timestamp                    |
+
+### **Proposed Expansion Entities**
+- **Type**: (`type_id` PK, `type_name` UQ) — e.g., Fire, Water  
+- **Pokemon_Type**: (pokemon_id FK, type_id FK) — junction table  
+- **Ability**: (`ability_id` PK, `ability_name` UQ, `description`)  
+- **Pokemon_Ability**: (pokemon_id FK, ability_id FK)  
+- **Region**: (`region_id` PK, `region_name` UQ)  
+  - Add `region_id` FK to Pokemon table (one-to-many)
+
+---
+
+## 🔧 Tech Stack
+
+- **Database**: MySQL (Workbench/CLI)  
+- **Backend**: Python + Flask  
+- **DB Connector**: `mysql-connector-python` (prepared statements)  
+- **Frontend**: HTML, Tailwind CSS, JavaScript (Vanilla JS)  
+- **Runtime**: Python 3.x  
+- **Version Control**: Git / GitHub  
+
+---
+
+## 👥 Team Members and Roles (Example)
+
+### **Member 1: Pham Minh Hieu** — Backend & Database Developer  
+- Database design (ERD, normalization, DDL)  
+- MySQL implementation (tables, views, SPs, triggers, indexing)  
+- Flask API, server-side validation, security, DB connections  
+
+### **Member 2: Cao Lam Huy** — Frontend Developer & Tester  
+- HTML/CSS/JS development, Tailwind styling  
+- Form handling, API calls, client-side validation  
+- Reporting/visualization, documentation, testing  
+
+---
+
+## 📅 Timeline (Example Milestones)
+
+### **Week 1 (May 6–13)**
+- Git repo setup, environment setup  
+- Finalize topic, list requirements  
+- Create initial ERD (≥4 entities), plan normalization  
+- Draft design doc, peer review by May 13
+
+### **Week 2 (May 13–20)**
+- Finalize schema & DDL, create DB  
+- Build Flask DB connection, implement Read API  
+- Basic frontend (HTML structure, table layout)  
+- Deliverable: Design Document by May 20
+
+### **Week 3 (May 20–27)**
+- Implement Create/Update/Delete APIs (with validation)  
+- Create Views, Stored Procedures, Triggers  
+- JS for data fetch/add form submission
+
+### **Week 4 (May 20–27)**
+- Implement Edit/Delete frontend features  
+- Connect reporting view to frontend  
+- Add user roles, apply indexing, test query speed  
+- Refine UI/UX, add feedback messages
+
+### **Week 5 (May 27)**
+- End-to-end testing, validation, constraint checks  
+- Finalize documentation and README  
+- Prepare slides, rehearse demo  
+- Deliverables: Final code (GitHub), report PDF, slides PDF for presentation
+
+---
+
+## 🗃️ Database Implementation Details
+
+- **Views**: e.g., `v_high_attack_pokemon`  
+- **Stored Procedures**: `sp_add_pokemon`, `sp_update_pokemon_stats`  
+- **Triggers**: e.g., `trg_pokemon_before_update`  
+- **Indexing**: On `pokemon.name`, foreign keys, etc.
+
+---
+
+## 🔒 Security Considerations
+
+- SQL injection prevention via prepared statements  
+- Define MySQL users (e.g., `pokemon_app_user`) with limited DML access  
+
+---
+
+## 🧪 Testing Strategy
+
+- **Integration Testing**: Ensure frontend triggers backend/database correctly  
+- **End-to-End Testing**: Manual test of CRUD, validation, error handling  
+- **Security Testing**: Ensure SQL injection attempts fail
+
+---
+
+## 📦 Deliverables
+
+- **Source Code**: Fully functional & documented (Flask + HTML/CSS/JS + SQL) in GitHub  
+- **Design Document**: ERD, DDL, task division (submitted earlier)  
+- **Final Report**: Architecture, decisions, testing, challenges (PDF)  
+- **Presentation Slides**: Summary of the project (PDF)  
+- **In-Class Presentation**: 10–15 min demo + Q&A  
