@@ -61,12 +61,10 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 | updated_at  | TIMESTAMP, AUTO-UPDATE    | Last modified timestamp                    |
 
 ### **Proposed Expansion Entities**
-- **Type**: (`type_id` PK, `type_name` UQ) — e.g., Fire, Water  
-- **Pokemon_Type**: (pokemon_id FK, type_id FK) — junction table  
+- **Trainer**: (`trainer_id` PK, `trainer_name`, `trainer_level`, `pokemon_set`)
 - **Ability**: (`ability_id` PK, `ability_name` UQ, `description`)  
-- **Pokemon_Ability**: (pokemon_id FK, ability_id FK)  
+- **Battle**: (`battle_id` PK, `battle_time`, `winner`)  
 - **Region**: (`region_id` PK, `region_name` UQ)  
-  - Add `region_id` FK to Pokemon table (one-to-many)
 
 ---
 
