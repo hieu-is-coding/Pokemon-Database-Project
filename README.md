@@ -45,7 +45,7 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
-## 🧱 Planned Core Entities
+## 🐱 Expected Core Entities
 
 > _(Initial design includes 1 entity. 4 more entities will be added to satisfy 3NF requirement.)_
 
@@ -68,7 +68,7 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
-## 🔧 Tech Stack
+## ⚙️ Technology
 
 - **Database**: MySQL (Workbench/CLI)  
 - **Backend**: Python + Flask  
