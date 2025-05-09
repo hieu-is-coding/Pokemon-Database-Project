@@ -25,7 +25,6 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 #### Database Features
 - At least **two STORED PROCEDURES** (e.g., add/update Pokemon).
 - At least **one TRIGGER** for audit logging or validation.
-- _(Future Scope)_ Authentication and **Role-Based Access Control**.
 
 ### **Non-functional Requirements**
 
@@ -132,13 +131,6 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 - **Stored Procedures**: `sp_add_pokemon`, `sp_update_pokemon_stats`  
 - **Triggers**: e.g., `trg_pokemon_before_update`  
 - **Indexing**: On `pokemon.name`, foreign keys, etc.
-
----
-
-## 🔒 Security Considerations
-
-- SQL injection prevention via prepared statements  
-- Define MySQL users (e.g., `pokemon_app_user`) with limited DML access  
 
 ---
 
