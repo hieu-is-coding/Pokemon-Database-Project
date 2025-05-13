@@ -78,7 +78,7 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
-## 👥 Team Members and Roles (Example)
+## 👥 Team Members and Roles
 
 ### **Member 1: Pham Minh Hieu** — Backend & Database Developer  
 - Database design (ERD, normalization, DDL)  
@@ -92,7 +92,7 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
-## 📅 Timeline (Example Milestones)
+## 📅 Timeline
 
 ### **Week 1 (May 6–13)**
 - Git repo setup, environment setup  
