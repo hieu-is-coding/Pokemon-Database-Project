@@ -2,7 +2,7 @@
 **Simple Pokemon Database Project**
 
 ## 📄 Brief Description  
-This project involves the conceptualization and implementation of a foundational Information System solution, developed from the perspective of a Database Developer. The system focuses on managing a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
+This project is a part of COMP3030 where we focus in Database managment. The system focuses on managing a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
 
 It solves the problem of needing a straightforward tool to view, add, modify, and remove Pokemon entries without directly interacting with the database via complex queries, while adhering to database design and implementation best practices.
 
@@ -145,7 +145,48 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 ## 📦 Deliverables
 
 - **Source Code**: Fully functional & documented (Flask + HTML/CSS/JS + SQL) in GitHub  
-- **Design Document**: ERD, DDL, task division (submitted earlier)  
+- **Design Document**: ERD, DDL, task division (check our document folder)  
 - **Final Report**: Architecture, decisions, testing, challenges (PDF)  
 - **Presentation Slides**: Summary of the project (PDF)  
 - **In-Class Presentation**: 10–15 min demo + Q&A  
+
+## Setup Instructions
+
+1. Clone the repository:
+```
+git clone <repository-url>
+cd pokemon_db_app
+```
+
+2. Create and activate a virtual environment:
+```
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+4. Create a `.env` file in the project root with the following content:
+```
+DB_USERNAME=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=pokemon_db
+SECRET_KEY=your_secret_key
+```
+
+5. Create the database and tables:
+```
+mysql -u your_mysql_username -p < schema.sql
+```
+
+6. Run the application:
+```
+python main.py
+```
+
+7. Access the application at http://localhost:5000
