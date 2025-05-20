@@ -1,0 +1,87 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.search-form {
+    margin-bottom: 20px;
+}
+
+.btn-action {
+    margin-right: 5px;
+}
+
+.footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.stats-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pokemon-img {
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.badge-ability {
+    margin-right: 5px;
+    background-color: #6c757d;
+}
+
+.badge-type {
+    margin-right: 5px;
+}
+
+.stat-bar {
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.stat-hp {
+    background-color: #ff5959;
+}
+
+.stat-attack {
+    background-color: #f5ac78;
+}
+
+.stat-defense {
+    background-color: #fae078;
+}

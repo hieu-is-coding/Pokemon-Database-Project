@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Battle Details - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Battle Details</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('battle.get_all_battles') }}" class="btn btn-secondary">Back to Battles</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Battle #{{ battle.battle_id }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Battle ID:</strong> {{ battle.battle_id }}</p>
+                <p><strong>Date:</strong> {{ battle.battle_time.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p><strong>Pokemon 1:</strong> {{ battle.trainer1_pokemon.name }}</p>
+                <p><strong>Pokemon 2:</strong> {{ battle.trainer2_pokemon.name }}</p>
+                <p><strong>Winner:</strong> {{ battle.winner_pokemon.name }}</p>
+                <p><strong>Region:</strong> {{ battle.region.region_name if battle.region else 'None' }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{{ url_for('battle.edit_battle_form', battle_id=battle.battle_id) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ url_for('battle.delete_battle', battle_id=battle.battle_id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

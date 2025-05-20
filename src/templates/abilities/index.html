@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Abilities - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Abilities</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('ability.new_ability_form') }}" class="btn btn-primary">Add New Ability</a>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Search Abilities</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('ability.search_abilities') }}" method="GET" class="search-form">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" name="q" class="form-control" placeholder="Search by name or description" value="{{ search_term if search_term }}">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary me-2">Search</button>
+                    <button type="button" class="btn btn-secondary reset-search">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if abilities %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ability in abilities %}
+            <tr>
+                <td>{{ ability.ability_id }}</td>
+                <td>{{ ability.ability_name }}</td>
+                <td>{{ ability.description|truncate(50) }}</td>
+                <td>
+                    <a href="{{ url_for('ability.get_ability', ability_id=ability.ability_id) }}" class="btn btn-sm btn-info btn-action">View</a>
+                    <a href="{{ url_for('ability.edit_ability_form', ability_id=ability.ability_id) }}" class="btn btn-sm btn-warning btn-action">Edit</a>
+                    <form action="{{ url_for('ability.delete_ability', ability_id=ability.ability_id) }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    No abilities found. {% if search_term %}Try a different search term or <a href="{{ url_for('ability.get_all_abilities') }}">view all abilities</a>.{% else %}Add a new ability to get started.{% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Database</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-4">Pokemon Database</h1>
+                <p class="lead">A comprehensive database for managing Pokemon, Trainers, Abilities, and Battles</p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Regions</h5>
+                                <p class="card-text">Manage Pokemon regions</p>
+                                <a href="{{ url_for('region.get_all_regions') }}" class="btn btn-primary">View Regions</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Trainers</h5>
+                                <p class="card-text">Manage Pokemon trainers</p>
+                                <a href="{{ url_for('trainer.get_all_trainers') }}" class="btn btn-primary">View Trainers</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Abilities</h5>
+                                <p class="card-text">Manage Pokemon abilities</p>
+                                <a href="{{ url_for('ability.get_all_abilities') }}" class="btn btn-primary">View Abilities</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Pokemon</h5>
+                                <p class="card-text">Manage Pokemon and their attributes</p>
+                                <a href="{{ url_for('pokemon.get_all_pokemons') }}" class="btn btn-primary">View Pokemon</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Battles</h5>
+                                <p class="card-text">Manage Pokemon battles</p>
+                                <a href="{{ url_for('battle.get_all_battles') }}" class="btn btn-primary">View Battles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

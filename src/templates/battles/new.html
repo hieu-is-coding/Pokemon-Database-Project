@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}New Battle - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Add New Battle</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('battle.get_all_battles') }}" class="btn btn-secondary">Back to Battles</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Battle Information</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('battle.create_battle') }}" method="POST">
+            <div class="mb-3">
+                <label for="trainer1_id" class="form-label">Pokemon 1</label>
+                <select class="form-select" id="trainer1_id" name="trainer1_id" required>
+                    <option value="">-- Select Pokemon --</option>
+                    {% for pokemon in pokemons %}
+                    <option value="{{ pokemon.id }}">{{ pokemon.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="trainer2_id" class="form-label">Pokemon 2</label>
+                <select class="form-select" id="trainer2_id" name="trainer2_id" required>
+                    <option value="">-- Select Pokemon --</option>
+                    {% for pokemon in pokemons %}
+                    <option value="{{ pokemon.id }}">{{ pokemon.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="winner_id" class="form-label">Winner</label>
+                <select class="form-select" id="winner_id" name="winner_id" required>
+                    <option value="">-- Select Winner --</option>
+                    {% for pokemon in pokemons %}
+                    <option value="{{ pokemon.id }}">{{ pokemon.name }}</option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Winner must be one of the participating Pokemon</small>
+            </div>
+            <div class="mb-3">
+                <label for="region_id" class="form-label">Region</label>
+                <select class="form-select" id="region_id" name="region_id">
+                    <option value="">-- Select Region --</option>
+                    {% for region in regions %}
+                    <option value="{{ region.region_id }}">{{ region.region_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Battle</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

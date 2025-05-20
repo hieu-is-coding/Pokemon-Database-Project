@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}New Trainer - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Add New Trainer</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('trainer.get_all_trainers') }}" class="btn btn-secondary">Back to Trainers</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Trainer Information</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('trainer.create_trainer') }}" method="POST">
+            <div class="mb-3">
+                <label for="trainer_name" class="form-label">Trainer Name</label>
+                <input type="text" class="form-control" id="trainer_name" name="trainer_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="trainer_level" class="form-label">Trainer Level</label>
+                <input type="number" class="form-control" id="trainer_level" name="trainer_level" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="region_id" class="form-label">Region</label>
+                <select class="form-select" id="region_id" name="region_id">
+                    <option value="">-- Select Region --</option>
+                    {% for region in regions %}
+                    <option value="{{ region.region_id }}">{{ region.region_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Trainer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Ability - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Edit Ability</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('ability.get_all_abilities') }}" class="btn btn-secondary">Back to Abilities</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Ability Information</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('ability.update_ability', ability_id=ability.ability_id) }}" method="POST">
+            <div class="mb-3">
+                <label for="ability_name" class="form-label">Ability Name</label>
+                <input type="text" class="form-control" id="ability_name" name="ability_name" value="{{ ability.ability_name }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ ability.description }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Ability</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

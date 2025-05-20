@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}New Pokemon - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Add New Pokemon</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('pokemon.get_all_pokemons') }}" class="btn btn-secondary">Back to Pokemon</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Pokemon Information</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('pokemon.create_pokemon') }}" method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Pokemon Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="hp" class="form-label">HP</label>
+                <input type="number" class="form-control" id="hp" name="hp" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="attack" class="form-label">Attack</label>
+                <input type="number" class="form-control" id="attack" name="attack" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="defense" class="form-label">Defense</label>
+                <input type="number" class="form-control" id="defense" name="defense" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="trainer_id" class="form-label">Trainer</label>
+                <select class="form-select" id="trainer_id" name="trainer_id">
+                    <option value="">-- Select Trainer --</option>
+                    {% for trainer in trainers %}
+                    <option value="{{ trainer.trainer_id }}">{{ trainer.trainer_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ability_ids" class="form-label">Abilities</label>
+                <select class="form-select ability-select" id="ability_ids" name="ability_ids" multiple>
+                    {% for ability in abilities %}
+                    <option value="{{ ability.ability_id }}">{{ ability.ability_name }}</option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Hold Ctrl (or Cmd on Mac) to select multiple abilities</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Pokemon</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Region Details - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Region Details</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('region.get_all_regions') }}" class="btn btn-secondary">Back to Regions</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>{{ region.region_name }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Region ID:</strong> {{ region.region_id }}</p>
+                <p><strong>Region Name:</strong> {{ region.region_name }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{{ url_for('region.edit_region_form', region_id=region.region_id) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ url_for('region.delete_region', region_id=region.region_id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if region.trainers %}
+<div class="mt-4">
+    <h3>Trainers in this Region</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trainer in region.trainers %}
+                <tr>
+                    <td>{{ trainer.trainer_id }}</td>
+                    <td>{{ trainer.trainer_name }}</td>
+                    <td>{{ trainer.trainer_level }}</td>
+                    <td>
+                        <a href="{{ url_for('trainer.get_trainer', trainer_id=trainer.trainer_id) }}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info mt-4">
+    No trainers in this region yet.
+</div>
+{% endif %}
+
+{% if region.battles %}
+<div class="mt-4">
+    <h3>Battles in this Region</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Pokemon 1</th>
+                    <th>Pokemon 2</th>
+                    <th>Winner</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for battle in region.battles %}
+                <tr>
+                    <td>{{ battle.battle_id }}</td>
+                    <td>{{ battle.battle_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ battle.trainer1_pokemon.name }}</td>
+                    <td>{{ battle.trainer2_pokemon.name }}</td>
+                    <td>{{ battle.winner_pokemon.name }}</td>
+                    <td>
+                        <a href="{{ url_for('battle.get_battle', battle_id=battle.battle_id) }}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info mt-4">
+    No battles in this region yet.
+</div>
+{% endif %}
+{% endblock %}

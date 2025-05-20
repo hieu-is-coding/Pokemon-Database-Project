@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Pokemon Details - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Pokemon Details</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('pokemon.get_all_pokemons') }}" class="btn btn-secondary">Back to Pokemon</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>{{ pokemon.name }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Pokemon ID:</strong> {{ pokemon.id }}</p>
+                <p><strong>Name:</strong> {{ pokemon.name }}</p>
+                <p><strong>HP:</strong> {{ pokemon.hp }}</p>
+                <p><strong>Attack:</strong> {{ pokemon.attack }}</p>
+                <p><strong>Defense:</strong> {{ pokemon.defense }}</p>
+                <p><strong>Trainer:</strong> {{ pokemon.trainer.trainer_name if pokemon.trainer else 'None' }}</p>
+                <p><strong>Created:</strong> {{ pokemon.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p><strong>Last Updated:</strong> {{ pokemon.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                
+                <h6 class="mt-3">Abilities:</h6>
+                {% if pokemon.abilities %}
+                <ul>
+                    {% for ability in pokemon.abilities %}
+                    <li>{{ ability.ability_name }} - {{ ability.description }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No abilities assigned.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{{ url_for('pokemon.edit_pokemon_form', pokemon_id=pokemon.id) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ url_for('pokemon.delete_pokemon', pokemon_id=pokemon.id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if pokemon.battles_as_trainer1 or pokemon.battles_as_trainer2 %}
+<div class="mt-4">
+    <h3>Battles</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Opponent</th>
+                    <th>Winner</th>
+                    <th>Region</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for battle in pokemon.battles_as_trainer1 %}
+                <tr>
+                    <td>{{ battle.battle_id }}</td>
+                    <td>{{ battle.battle_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ battle.trainer2_pokemon.name }}</td>
+                    <td>{{ battle.winner_pokemon.name }}</td>
+                    <td>{{ battle.region.region_name if battle.region else 'None' }}</td>
+                    <td>
+                        <a href="{{ url_for('battle.get_battle', battle_id=battle.battle_id) }}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% for battle in pokemon.battles_as_trainer2 %}
+                <tr>
+                    <td>{{ battle.battle_id }}</td>
+                    <td>{{ battle.battle_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ battle.trainer1_pokemon.name }}</td>
+                    <td>{{ battle.winner_pokemon.name }}</td>
+                    <td>{{ battle.region.region_name if battle.region else 'None' }}</td>
+                    <td>
+                        <a href="{{ url_for('battle.get_battle', battle_id=battle.battle_id) }}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info mt-4">
+    This Pokemon has not participated in any battles yet.
+</div>
+{% endif %}
+{% endblock %}

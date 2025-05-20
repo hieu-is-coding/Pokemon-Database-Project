@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}New Region - Pokemon Database{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h2>Add New Region</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="{{ url_for('region.get_all_regions') }}" class="btn btn-secondary">Back to Regions</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Region Information</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('region.create_region') }}" method="POST">
+            <div class="mb-3">
+                <label for="region_name" class="form-label">Region Name</label>
+                <input type="text" class="form-control" id="region_name" name="region_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Region</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
