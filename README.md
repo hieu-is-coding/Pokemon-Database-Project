@@ -1,167 +1,151 @@
-# Pokemon Database Web App - README
+# 📌 Project Title  
+**Simple Pokemon Database Project**
 
-## Overview
-This is a Flask-based Pokemon database web application with MySQL database support. The application allows users to perform CRUD operations (Create, Read, Update, Delete) on various entities including regions, trainers, abilities, Pokemon, and battles.
+## 📄 Brief Description  
+This project involves the conceptualization and implementation of a foundational Information System solution, developed from the perspective of a Database Developer. The system focuses on managing a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
 
-## Features
-- **Region Management**: Add, view, edit, and delete Pokemon regions
-- **Trainer Management**: Add, view, edit, and delete trainers with region assignments
-- **Ability Management**: Add, view, edit, and delete Pokemon abilities
-- **Pokemon Management**: Add, view, edit, and delete Pokemon with trainer assignments and ability relationships
-- **Battle Management**: Record, view, edit, and delete battles between Pokemon
-- **Search Functionality**: Search capabilities for all entities
+It solves the problem of needing a straightforward tool to view, add, modify, and remove Pokemon entries without directly interacting with the database via complex queries, while adhering to database design and implementation best practices.
 
-## Technology Stack
-- **Backend**: Flask (Python)
-- **Database**: MySQL
-- **ORM**: SQLAlchemy
-- **Frontend**: HTML, CSS, JavaScript, Bootstrap
+---
 
-## Installation and Setup
+## 🎯 Functional & Non-functional Requirements  
 
-### Prerequisites
-- Python 3.x
-- MySQL Server
-- pip (Python package manager)
+### **Functional Requirements**
 
-### Setup Instructions
+#### Entities Management (CRUD)
+- **Create**: Add new Pokemon entries (name, HP, attack, defense) via a validated web form.  
+- **Read**: View all Pokemon in a sortable/filterable table (ID, name, HP, attack, defense).  
+- **Update**: Edit Pokemon details through the interface.  
+- **Delete**: Remove Pokemon records with confirmation.  
 
-1. Clone the repository:
-```
-git clone <repository-url>
-cd pokemon_db_app
-```
+#### Analytics and Reporting (Basic)
+- At least one **VIEW** to show aggregated/specific data (e.g., Pokemon above a certain attack threshold, total count).
+- _(Future Scope)_ Basic statistics tracking (e.g., average stats), and basic web-based visualizations.
 
-2. Create and activate a virtual environment:
-```
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+#### Database Features
+- At least **two STORED PROCEDURES** (e.g., add/update Pokemon).
+- At least **one TRIGGER** for audit logging or validation.
 
-3. Install dependencies:
-```
-pip install -r requirements.txt
-```
+### **Non-functional Requirements**
 
-4. Create a `.env` file in the project root with the following content:
-```
-DB_USERNAME=your_mysql_username
-DB_PASSWORD=your_mysql_password
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=pokemon_db
-SECRET_KEY=your_secret_key
-```
+- **Usability**: Clean, intuitive, user-friendly interface.  
+- **Performance**: Fast operations; use of **INDEXING** for optimization.  
+- **Reliability**: Graceful error handling, data integrity via constraints.  
+- **Maintainability**: Well-structured and commented code with version control (Git/GitHub).  
+- **Security**:
+  - Input validation (client + server).
+  - Use **prepared statements** to prevent SQL injection.
+  - _(Course Req)_ Define MySQL user roles (e.g., `app_user`, `admin_user`) with least privilege.  
+  - If authentication is added: encrypt sensitive data.
 
-5. Create the database and tables:
-```
-mysql -u your_mysql_username -p < schema.sql
-```
+- **Database Standards**: Use MySQL-specific features (SPs, Triggers).  
+- **Normalization**: Aim for **Third Normal Form (3NF)**.  
+- **Reproducibility**: Clear documentation for easy setup and testing.
 
-6. Run the application:
-```
-python main.py
-```
+---
 
-7. Access the application at http://localhost:5000
+## 🐱 Expected Core Entities
 
-## Project Structure
-```
-pokemon_db_app/
-├── venv/                      # Virtual environment
-├── src/                       # Source code
-│   ├── main.py                # Application entry point
-│   ├── models/                # Database models
-│   │   ├── __init__.py
-│   │   ├── region.py          # Region model
-│   │   ├── trainer.py         # Trainer model
-│   │   ├── ability.py         # Ability model
-│   │   ├── pokemon.py         # Pokemon model
-│   │   └── battle.py          # Battle model
-│   ├── routes/                # API routes
-│   │   ├── __init__.py
-│   │   ├── region_routes.py   # Region CRUD routes
-│   │   ├── trainer_routes.py  # Trainer CRUD routes
-│   │   ├── ability_routes.py  # Ability CRUD routes
-│   │   ├── pokemon_routes.py  # Pokemon CRUD routes
-│   │   └── battle_routes.py   # Battle CRUD routes
-│   ├── static/                # Static assets
-│   │   ├── css/               # CSS files
-│   │   ├── js/                # JavaScript files
-│   │   └── img/               # Image files
-│   └── templates/             # HTML templates
-│       ├── base.html          # Base template
-│       ├── index.html         # Home page
-│       ├── regions/           # Region templates
-│       ├── trainers/          # Trainer templates
-│       ├── abilities/         # Ability templates
-│       ├── pokemons/          # Pokemon templates
-│       └── battles/           # Battle templates
-├── main.py                    # Application entry point
-├── schema.sql                 # Database schema
-└── requirements.txt           # Project dependencies
-```
+> _(Initial design includes 1 entity. 4 more entities will be added to satisfy 3NF requirement.)_
 
-## Entity Relationships
+### **Pokemon** (Primary Entity)
+| Field       | Type                      | Description                                |
+|-------------|---------------------------|--------------------------------------------|
+| id          | INT, PK, AUTO_INCREMENT    | Unique identifier                          |
+| name        | VARCHAR(100), NOT NULL, UQ| Pokemon name                               |
+| hp          | INT, NOT NULL             | Hit Points stat                            |
+| attack      | INT, NOT NULL             | Attack stat                                |
+| defense     | INT, NOT NULL             | Defense stat                               |
+| created_at  | TIMESTAMP, DEFAULT NOW()  | Created timestamp                          |
+| updated_at  | TIMESTAMP, AUTO-UPDATE    | Last modified timestamp                    |
 
-1. **Region**:
-   - One-to-many relationship with Trainer (one region can have many trainers)
-   - One-to-many relationship with Battle (one region can host many battles)
+### **Proposed Expansion Entities**
+- **Trainer**: (`trainer_id` PK, `trainer_name`, `trainer_level`, `pokemon_set`)
+- **Ability**: (`ability_id` PK, `ability_name` UQ, `description`)  
+- **Battle**: (`battle_id` PK, `battle_time`, `winner`)  
+- **Region**: (`region_id` PK, `region_name` UQ)  
 
-2. **Trainer**:
-   - Many-to-one relationship with Region (many trainers can be from one region)
-   - One-to-many relationship with Pokemon (one trainer can own many Pokemon)
+---
 
-3. **Ability**:
-   - Many-to-many relationship with Pokemon through Pokemon_Ability junction table
+## ⚙️ Technology
 
-4. **Pokemon**:
-   - Many-to-one relationship with Trainer (many Pokemon can be owned by one trainer)
-   - Many-to-many relationship with Ability through Pokemon_Ability junction table
-   - One-to-many relationship with Battle (one Pokemon can participate in many battles)
+- **Database**: MySQL (Workbench/CLI)  
+- **Backend**: Python + Flask  
+- **DB Connector**: `mysql-connector-python` (prepared statements)  
+- **Frontend**: HTML, Tailwind CSS, JavaScript (Vanilla JS)  
+- **Runtime**: Python 3.x  
+- **Version Control**: Git / GitHub  
 
-5. **Battle**:
-   - Many-to-one relationship with Region (many battles can occur in one region)
-   - Many-to-one relationship with Pokemon for trainer1_id, trainer2_id, and winner_id
+---
 
-## API Endpoints
+## 👥 Team Members and Roles
 
-### Region Endpoints
-- GET /regions - List all regions
-- GET /regions/<id> - Get region details
-- POST /regions - Create new region
-- PUT /regions/<id> - Update region
-- DELETE /regions/<id> - Delete region
+### **Member 1: Pham Minh Hieu** — Backend & Database Developer  
+- Database design (ERD, normalization, DDL)  
+- MySQL implementation (tables, views, SPs, triggers, indexing)  
+- Flask API, server-side validation, security, DB connections  
 
-### Trainer Endpoints
-- GET /trainers - List all trainers
-- GET /trainers/<id> - Get trainer details
-- POST /trainers - Create new trainer
-- PUT /trainers/<id> - Update trainer
-- DELETE /trainers/<id> - Delete trainer
+### **Member 2: Cao Lam Huy** — Frontend Developer & Tester  
+- HTML/CSS/JS development, Tailwind styling  
+- Form handling, API calls, client-side validation  
+- Reporting/visualization, documentation, testing  
 
-### Ability Endpoints
-- GET /abilities - List all abilities
-- GET /abilities/<id> - Get ability details
-- POST /abilities - Create new ability
-- PUT /abilities/<id> - Update ability
-- DELETE /abilities/<id> - Delete ability
+---
 
-### Pokemon Endpoints
-- GET /pokemons - List all Pokemon
-- GET /pokemons/<id> - Get Pokemon details
-- POST /pokemons - Create new Pokemon
-- PUT /pokemons/<id> - Update Pokemon
-- DELETE /pokemons/<id> - Delete Pokemon
-- POST /pokemons/<id>/abilities/<ability_id> - Assign ability to Pokemon
-- DELETE /pokemons/<id>/abilities/<ability_id> - Remove ability from Pokemon
+## 📅 Timeline
 
-### Battle Endpoints
-- GET /battles - List all battles
-- GET /battles/<id> - Get battle details
-- POST /battles - Create new battle
-- PUT /battles/<id> - Update battle
-- DELETE /battles/<id> - Delete battle
+### **Week 1 (May 6–13)**
+- Git repo setup, environment setup  
+- Finalize topic, list requirements  
+- Create initial ERD (≥4 entities), plan normalization  
+- Draft design doc, peer review by May 13
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+### **Week 2 (May 13–20)**
+- Finalize schema & DDL, create DB  
+- Build Flask DB connection, implement Read API  
+- Basic frontend (HTML structure, table layout)  
+- Deliverable: Design Document by May 20
+
+### **Week 3 (May 20–27)**
+- Implement Create/Update/Delete APIs (with validation)  
+- Create Views, Stored Procedures, Triggers  
+- JS for data fetch/add form submission
+
+### **Week 4 (May 20–27)**
+- Implement Edit/Delete frontend features  
+- Connect reporting view to frontend  
+- Add user roles, apply indexing, test query speed  
+- Refine UI/UX, add feedback messages
+
+### **Week 5 (May 27)**
+- End-to-end testing, validation, constraint checks  
+- Finalize documentation and README  
+- Prepare slides, rehearse demo  
+- Deliverables: Final code (GitHub), report PDF, slides PDF for presentation
+
+---
+
+## 🗃️ Database Implementation Details
+
+- **Views**: e.g., `v_high_attack_pokemon`  
+- **Stored Procedures**: `sp_add_pokemon`, `sp_update_pokemon_stats`  
+- **Triggers**: e.g., `trg_pokemon_before_update`  
+- **Indexing**: On `pokemon.name`, foreign keys, etc.
+
+---
+
+## 🧪 Testing Strategy
+
+- **Integration Testing**: Ensure frontend triggers backend/database correctly  
+- **End-to-End Testing**: Manual test of CRUD, validation, error handling  
+- **Security Testing**: Ensure SQL injection attempts fail
+
+---
+
+## 📦 Deliverables
+
+- **Source Code**: Fully functional & documented (Flask + HTML/CSS/JS + SQL) in GitHub  
+- **Design Document**: ERD, DDL, task division (submitted earlier)  
+- **Final Report**: Architecture, decisions, testing, challenges (PDF)  
+- **Presentation Slides**: Summary of the project (PDF)  
+- **In-Class Presentation**: 10–15 min demo + Q&A  
