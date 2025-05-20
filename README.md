@@ -2,7 +2,7 @@
 **Simple Pokemon Database Project**
 
 ## 📄 Brief Description  
-This project is a part of COMP3030 where we focus in Database managment. The system focuses on managing a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
+This project is a part of COMP3030 where we focus in Database managment. The system aims to manage a simplified dataset of Pokemon, providing a web-based, user-friendly interface for performing basic Create, Read, Update, and Delete (CRUD) operations (Entities Management) on Pokemon records stored exclusively in a MySQL database.  
 
 It solves the problem of needing a straightforward tool to view, add, modify, and remove Pokemon entries without directly interacting with the database via complex queries, while adhering to database design and implementation best practices.
 
@@ -13,10 +13,11 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 ### **Functional Requirements**
 
 #### Entities Management (CRUD)
-- **Create**: Add new Pokemon entries (name, HP, attack, defense) via a validated web form.  
-- **Read**: View all Pokemon in a sortable/filterable table (ID, name, HP, attack, defense).  
-- **Update**: Edit Pokemon details through the interface.  
-- **Delete**: Remove Pokemon records with confirmation.  
+- **Create**: Add new entity entries (Region, Trainer, Ability, Pokemon, Battle) via a validated web form.  
+- **Read**: View all entities in a sortable/filterable table.  
+- **Update**: Edit entity details through the interface.  
+- **Delete**: Remove entity records with confirmation.  
+- **Search**: Simple search for name of entity.
 
 #### Analytics and Reporting (Basic)
 - At least one **VIEW** to show aggregated/specific data (e.g., Pokemon above a certain attack threshold, total count).
@@ -150,12 +151,14 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 - **Presentation Slides**: Summary of the project (PDF)  
 - **In-Class Presentation**: 10–15 min demo + Q&A  
 
+---
+
 ## Setup Instructions
 
 1. Clone the repository:
 ```
-git clone <repository-url>
-cd pokemon_db_app
+git clone https://github.com/hieu-is-coding/Pokemon-Database-Project
+cd Pokemon-Database-Project
 ```
 
 2. Create and activate a virtual environment:
