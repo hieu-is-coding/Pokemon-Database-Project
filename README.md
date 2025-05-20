@@ -8,6 +8,49 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
+## Setup Instructions
+
+1. Clone the repository:
+```
+git clone https://github.com/hieu-is-coding/Pokemon-Database-Project
+cd Pokemon-Database-Project
+```
+
+2. Create and activate a virtual environment:
+```
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+4. Create a `.env` file in the project root with the following content:
+```
+DB_USERNAME=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=pokemon_db
+SECRET_KEY=your_secret_key
+```
+
+5. Create the database and tables:
+```
+mysql -u your_mysql_username -p < schema.sql
+```
+
+6. Run the application:
+```
+python main.py
+```
+
+7. Access the application at http://localhost:5000
+
+---
+
 ## 🎯 Functional & Non-functional Requirements  
 
 ### **Functional Requirements**
@@ -150,46 +193,3 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 - **Final Report**: Architecture, decisions, testing, challenges (PDF)  
 - **Presentation Slides**: Summary of the project (PDF)  
 - **In-Class Presentation**: 10–15 min demo + Q&A  
-
----
-
-## Setup Instructions
-
-1. Clone the repository:
-```
-git clone https://github.com/hieu-is-coding/Pokemon-Database-Project
-cd Pokemon-Database-Project
-```
-
-2. Create and activate a virtual environment:
-```
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```
-pip install -r requirements.txt
-```
-
-4. Create a `.env` file in the project root with the following content:
-```
-DB_USERNAME=your_mysql_username
-DB_PASSWORD=your_mysql_password
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=pokemon_db
-SECRET_KEY=your_secret_key
-```
-
-5. Create the database and tables:
-```
-mysql -u your_mysql_username -p < schema.sql
-```
-
-6. Run the application:
-```
-python main.py
-```
-
-7. Access the application at http://localhost:5000
