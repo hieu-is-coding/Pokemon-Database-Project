@@ -18,7 +18,7 @@ cd Pokemon-Database-Project
 
 2. Create and activate a virtual environment:
 ```
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
@@ -44,14 +44,14 @@ SECRET_KEY=your_secret_key
 mysql -u your_mysql_username -p < scripts/schema.sql
 ```
 
-6. Data sample loading (optinal)
+6. Data sample loading (optinal):
 ```
 mysql -u your_mysql_username -p pokemon_db < scripts/sample_data.sql
 ```
 
 7. Run the application:
 ```
-python main.py
+python3 main.py
 ```
 
 8. Access the application at http://localhost:5000
