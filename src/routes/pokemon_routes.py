@@ -3,6 +3,8 @@ from src.models import db
 from src.models.pokemon import Pokemon
 from src.models.trainer import Trainer
 from src.models.ability import Ability
+from src.models.battle import Battle
+from sqlalchemy import text
 
 pokemon_bp = Blueprint('pokemon', __name__, url_prefix='/pokemons')
 
@@ -18,8 +20,9 @@ def get_pokemon(pokemon_id):
 
 @pokemon_bp.route('/new', methods=['GET'])
 def new_pokemon_form():
-    trainers = Trainer.query.all()
-    abilities = Ability.query.all()
+    # Get trainers and abilities for the form
+    trainers = db.session.execute(text('SELECT * FROM Trainer ORDER BY trainer_name')).fetchall()
+    abilities = db.session.execute(text('SELECT * FROM Ability ORDER BY ability_name')).fetchall()
     return render_template('pokemons/new.html', trainers=trainers, abilities=abilities)
 
 @pokemon_bp.route('/', methods=['POST'])
@@ -138,11 +141,19 @@ def update_pokemon(pokemon_id):
 @pokemon_bp.route('/<int:pokemon_id>/delete', methods=['POST'])
 def delete_pokemon(pokemon_id):
     pokemon = Pokemon.query.get_or_404(pokemon_id)
-    
+    battles_as_trainer1 = Battle.query.filter(Battle.trainer1_id == pokemon_id).all()
+    battles_as_trainer2 = Battle.query.filter(Battle.trainer2_id == pokemon_id).all()
+
     try:
+        for battle in battles_as_trainer1:
+            db.session.delete(battle)
+        for battle in battles_as_trainer2:
+            db.session.delete(battle)
+
+        
         db.session.delete(pokemon)
         db.session.commit()
-        flash('Pokemon deleted successfully', 'success')
+        flash('Pokemon (and related battles) deleted successfully', 'success')
         return redirect(url_for('pokemon.get_all_pokemons'))
     except Exception as e:
         db.session.rollback()

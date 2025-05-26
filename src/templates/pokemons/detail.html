@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-6 text-end">
                 <a href="{{ url_for('pokemon.edit_pokemon_form', pokemon_id=pokemon.id) }}" class="btn btn-warning">Edit</a>
-                <form action="{{ url_for('pokemon.delete_pokemon', pokemon_id=pokemon.id) }}" method="POST" class="d-inline">
+                <form action="{{ url_for('pokemon.delete_pokemon', pokemon_id=pokemon.id) }}" method="POST" class="d-inline" onsubmit="return confirm('This action will also delete all associated battles.');">
                     <button type="submit" class="btn btn-danger delete-btn">Delete</button>
                 </form>
             </div>
