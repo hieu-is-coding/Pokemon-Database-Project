@@ -21,7 +21,7 @@ CREATE TABLE Trainer (
     trainer_name VARCHAR(100) NOT NULL,
     trainer_level INT NOT NULL,
     region_id INT,
-    FOREIGN KEY (region_id) REFERENCES Region(region_id)
+    FOREIGN KEY (region_id) REFERENCES Region(region_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Ability (
@@ -39,15 +39,15 @@ CREATE TABLE Pokemon (
     trainer_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (trainer_id) REFERENCES Trainer(trainer_id)
+    FOREIGN KEY (trainer_id) REFERENCES Trainer(trainer_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Pokemon_Ability (
     pokemon_id INT,
     ability_id INT,
     PRIMARY KEY (pokemon_id, ability_id),
-    FOREIGN KEY (pokemon_id) REFERENCES Pokemon(id),
-    FOREIGN KEY (ability_id) REFERENCES Ability(ability_id)
+    FOREIGN KEY (pokemon_id) REFERENCES Pokemon(id) ON DELETE CASCADE,
+    FOREIGN KEY (ability_id) REFERENCES Ability(ability_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Battle (
@@ -60,5 +60,5 @@ CREATE TABLE Battle (
     FOREIGN KEY (trainer1_id) REFERENCES Pokemon(id),
     FOREIGN KEY (trainer2_id) REFERENCES Pokemon(id),
     FOREIGN KEY (winner_id) REFERENCES Pokemon(id),
-    FOREIGN KEY (region_id) REFERENCES Region(region_id)
+    FOREIGN KEY (region_id) REFERENCES Region(region_id) ON DELETE SET NULL
 );

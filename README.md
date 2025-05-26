@@ -34,20 +34,27 @@ DB_PASSWORD=your_mysql_password
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=pokemon_db
+
+# Other secret key if needed
 SECRET_KEY=your_secret_key
 ```
 
 5. Create the database and tables:
 ```
-mysql -u your_mysql_username -p < schema.sql
+mysql -u your_mysql_username -p < scripts/schema.sql
 ```
 
-6. Run the application:
+6. Data sample loading (optinal)
+```
+mysql -u your_mysql_username -p pokemon_db < scripts/sample_data.sql
+```
+
+7. Run the application:
 ```
 python main.py
 ```
 
-7. Access the application at http://localhost:5000
+8. Access the application at http://localhost:5000
 
 ---
 
