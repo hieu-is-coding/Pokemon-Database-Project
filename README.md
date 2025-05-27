@@ -39,9 +39,9 @@ DB_NAME=pokemon_db
 SECRET_KEY=your_secret_key
 ```
 
-5. Create the database and tables:
+5. Create the database and add indexes, views, striggers, partitioning:
 ```
-mysql -u your_mysql_username -p < scripts/schema.sql
+python3 setup.py
 ```
 
 6. Data sample loading (optinal):

@@ -1,3 +1,5 @@
+USE pokemon_db;
+
 -- Clear existing data 
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE battle;
