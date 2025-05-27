@@ -27,7 +27,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Create new user for access (optinal):
+4. Create new user for access (optional):
 ```
 CREATE USER 'your_mysql_username'@'localhost' IDENTIFIED BY 'your_mysql_password';
 ```
@@ -61,7 +61,7 @@ FLUSH PRIVILEGES;
 python3 src/create_admin.py admin admin@example.com your_password
 ```
 
-9. Data sample loading (optinal):
+9. Data sample loading (optional):
 ```
 mysql -u your_mysql_username -p pokemon_db < scripts/sample_data.sql
 ```
