@@ -2,7 +2,17 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from src.models import db
 from src.models.ability import Ability
 from sqlalchemy import text
+from flask_login import login_required, current_user
+from functools import wraps
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.has_role('admin'):
+            flash('You do not have permission to access this page.', 'danger')
+            return redirect(request.referrer or url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 ability_bp = Blueprint('ability', __name__, url_prefix='/abilities')
 
@@ -17,10 +27,14 @@ def get_ability(ability_id):
     return render_template('abilities/detail.html', ability=ability)
 
 @ability_bp.route('/new', methods=['GET'])
+@login_required
+@admin_required
 def new_ability_form():
     return render_template('abilities/new.html')
 
 @ability_bp.route('/abilities', methods=['POST'])
+@login_required
+@admin_required
 def create_ability():
     ability_name = request.form.get('ability_name')
     description = request.form.get('description')
@@ -43,6 +57,8 @@ def create_ability():
     return redirect(url_for('ability.get_all_abilities'))
 
 @ability_bp.route('/<int:ability_id>/edit', methods=['GET'])
+@login_required
+@admin_required
 def edit_ability_form(ability_id):
     # Get ability by ID
     ability = db.session.execute(text('SELECT * FROM Ability WHERE ability_id = :id'), {'id': ability_id}).fetchone()
@@ -54,6 +70,8 @@ def edit_ability_form(ability_id):
     return render_template('abilities/edit.html', ability=ability)
 
 @ability_bp.route('/<int:ability_id>', methods=['POST'])
+@login_required
+@admin_required
 def update_ability(ability_id):
     ability_name = request.form.get('ability_name')
     description = request.form.get('description')
@@ -77,6 +95,8 @@ def update_ability(ability_id):
     return redirect(url_for('ability.get_ability', ability_id=ability_id))
 
 @ability_bp.route('/<int:ability_id>/delete', methods=['POST'])
+@login_required
+@admin_required
 def delete_ability(ability_id):
     try:
         # Delete ability using raw SQL

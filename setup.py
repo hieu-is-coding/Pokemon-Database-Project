@@ -80,7 +80,8 @@ def main():
         'indexes.sql',
         'views.sql',
         'triggers.sql',
-        'partitioning.sql'
+        'partitioning.sql',
+        'security.sql',
     ]
     
     for file in files:

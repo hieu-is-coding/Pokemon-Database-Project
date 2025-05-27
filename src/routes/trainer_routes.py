@@ -2,6 +2,17 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from src.models import db
 from src.models.trainer import Trainer
 from src.models.region import Region
+from flask_login import login_required, current_user
+from functools import wraps
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.has_role('admin'):
+            flash('You do not have permission to access this page.', 'danger')
+            return redirect(request.referrer or url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 trainer_bp = Blueprint('trainer', __name__, url_prefix='/trainers')
 
@@ -16,11 +27,15 @@ def get_trainer(trainer_id):
     return render_template('trainers/detail.html', trainer=trainer)
 
 @trainer_bp.route('/new', methods=['GET'])
+@login_required
+@admin_required
 def new_trainer_form():
     regions = Region.query.all()
     return render_template('trainers/new.html', regions=regions)
 
 @trainer_bp.route('/', methods=['POST'])
+@login_required
+@admin_required
 def create_trainer():
     trainer_name = request.form.get('trainer_name')
     trainer_level = request.form.get('trainer_level')
@@ -57,12 +72,16 @@ def create_trainer():
         return redirect(url_for('trainer.new_trainer_form'))
 
 @trainer_bp.route('/<int:trainer_id>/edit', methods=['GET'])
+@login_required
+@admin_required
 def edit_trainer_form(trainer_id):
     trainer = Trainer.query.get_or_404(trainer_id)
     regions = Region.query.all()
     return render_template('trainers/edit.html', trainer=trainer, regions=regions)
 
 @trainer_bp.route('/<int:trainer_id>', methods=['POST'])
+@login_required
+@admin_required
 def update_trainer(trainer_id):
     trainer = Trainer.query.get_or_404(trainer_id)
     
@@ -97,6 +116,8 @@ def update_trainer(trainer_id):
         return redirect(url_for('trainer.edit_trainer_form', trainer_id=trainer_id))
 
 @trainer_bp.route('/<int:trainer_id>/delete', methods=['POST'])
+@login_required
+@admin_required
 def delete_trainer(trainer_id):
     trainer = Trainer.query.get_or_404(trainer_id)
     

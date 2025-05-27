@@ -27,7 +27,12 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Create a `.env` file in the project root with the following content:
+4. Create new user for access (optinal):
+```
+CREATE USER 'your_mysql_username'@'localhost' IDENTIFIED BY 'your_mysql_password';
+```
+
+5. Create a `.env` file in the project root with the following content:
 ```
 DB_USERNAME=your_mysql_username
 DB_PASSWORD=your_mysql_password
@@ -39,22 +44,34 @@ DB_NAME=pokemon_db
 SECRET_KEY=your_secret_key
 ```
 
-5. Create the database and add indexes, views, striggers, partitioning:
+6. Create the database and add indexes, views, striggers, partitioning:
 ```
 python3 setup.py
 ```
 
-6. Data sample loading (optinal):
+7. Grant full acess to *your_mysql_username*
+```
+mysql -u root -p
+GRANT ALL PRIVILEGES ON pokemon_db.* TO 'your_mysql_username'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+8. Set up admin for security enhancement (you should remember this login detail)
+```
+python3 src/create_admin.py admin admin@example.com your_password
+```
+
+9. Data sample loading (optinal):
 ```
 mysql -u your_mysql_username -p pokemon_db < scripts/sample_data.sql
 ```
 
-7. Run the application:
+10. Run the application:
 ```
 python3 main.py
 ```
 
-8. Access the application at http://localhost:5000
+11. Access the application at http://localhost:5000
 
 ---
 

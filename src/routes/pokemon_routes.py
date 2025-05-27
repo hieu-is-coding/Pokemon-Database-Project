@@ -5,6 +5,17 @@ from src.models.trainer import Trainer
 from src.models.ability import Ability
 from src.models.battle import Battle
 from sqlalchemy import text
+from flask_login import login_required, current_user
+from functools import wraps
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.has_role('admin'):
+            flash('You do not have permission to access this page.', 'danger')
+            return redirect(request.referrer or url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 pokemon_bp = Blueprint('pokemon', __name__, url_prefix='/pokemons')
 
@@ -19,6 +30,8 @@ def get_pokemon(pokemon_id):
     return render_template('pokemons/detail.html', pokemon=pokemon)
 
 @pokemon_bp.route('/new', methods=['GET'])
+@login_required
+@admin_required
 def new_pokemon_form():
     # Get trainers and abilities for the form
     trainers = db.session.execute(text('SELECT * FROM Trainer ORDER BY trainer_name')).fetchall()
@@ -26,6 +39,8 @@ def new_pokemon_form():
     return render_template('pokemons/new.html', trainers=trainers, abilities=abilities)
 
 @pokemon_bp.route('/', methods=['POST'])
+@login_required
+@admin_required
 def create_pokemon():
     name = request.form.get('name')
     hp = request.form.get('hp')
@@ -79,6 +94,8 @@ def create_pokemon():
         return redirect(url_for('pokemon.new_pokemon_form'))
 
 @pokemon_bp.route('/<int:pokemon_id>/edit', methods=['GET'])
+@login_required
+@admin_required
 def edit_pokemon_form(pokemon_id):
     pokemon = Pokemon.query.get_or_404(pokemon_id)
     trainers = Trainer.query.all()
@@ -86,6 +103,8 @@ def edit_pokemon_form(pokemon_id):
     return render_template('pokemons/edit.html', pokemon=pokemon, trainers=trainers, abilities=abilities)
 
 @pokemon_bp.route('/<int:pokemon_id>', methods=['POST'])
+@login_required
+@admin_required
 def update_pokemon(pokemon_id):
     pokemon = Pokemon.query.get_or_404(pokemon_id)
     
@@ -139,6 +158,8 @@ def update_pokemon(pokemon_id):
         return redirect(url_for('pokemon.edit_pokemon_form', pokemon_id=pokemon_id))
 
 @pokemon_bp.route('/<int:pokemon_id>/delete', methods=['POST'])
+@login_required
+@admin_required
 def delete_pokemon(pokemon_id):
     pokemon = Pokemon.query.get_or_404(pokemon_id)
     battles_as_trainer1 = Battle.query.filter(Battle.trainer1_id == pokemon_id).all()

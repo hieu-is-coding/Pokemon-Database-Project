@@ -32,6 +32,10 @@
                             Battles
                             <span class="badge bg-primary rounded-pill">{{ stats.battle_count }}</span>
                         </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Users
+                            <span class="badge bg-primary rounded-pill">{{ stats.user_count }}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -39,7 +43,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Admin Actions</h5>
+                    <h5>Action Logs</h5>
                 </div>
                 <div class="card-body">
                     <a href="{{ url_for('admin.view_logs') }}" class="btn btn-primary btn-lg d-block mb-3">View Audit Logs</a>
