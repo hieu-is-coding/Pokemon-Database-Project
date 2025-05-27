@@ -67,7 +67,6 @@ def create_battle():
     db.session.add(new_battle)
     
     try:
-        # Insert new battle using raw SQL
         db.session.execute(text(
             '''INSERT INTO Battle 
                (trainer1_id, trainer2_id, winner_id, region_id) 

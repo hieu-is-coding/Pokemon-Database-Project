@@ -1,5 +1,8 @@
 USE pokemon_db;
 
+-- Set the log_bin_trust_function_creators variable to allow trigger creation
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 DROP TABLE IF EXISTS User_Role;
 DROP TABLE IF EXISTS User;
 

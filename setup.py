@@ -76,12 +76,12 @@ def main():
     
     # Files to execute in order
     files = [
+        'security.sql',
         'schema.sql',
         'indexes.sql',
         'views.sql',
         'triggers.sql',
-        'partitioning.sql',
-        'security.sql',
+        'partitioning.sql'
     ]
     
     for file in files:

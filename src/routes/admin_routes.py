@@ -19,7 +19,6 @@ def admin_required(f):
 @login_required
 @admin_required
 def admin_dashboard():
-    # Get basic statistics for the dashboard
     stats = db.session.execute(text('''
         SELECT 
             (SELECT COUNT(*) FROM Region) as region_count,
@@ -30,7 +29,6 @@ def admin_dashboard():
             (SELECT COUNT(*)-1 FROM User) as user_count
     ''')).fetchone()
     
-    # Convert to dictionary using _mapping attribute
     stats_dict = stats._mapping
     
     return render_template('admin/dashboard.html', stats=stats_dict)
@@ -39,14 +37,12 @@ def admin_dashboard():
 @login_required
 @admin_required
 def view_logs():
-    # Get audit logs using raw SQL
     logs_rows = db.session.execute(text('''
         SELECT * FROM pokemon_audit_log
         ORDER BY change_timestamp DESC
         LIMIT 100
     ''')).fetchall()
     
-    # Convert to list of dictionaries using _mapping attribute
     logs = [row._mapping for row in logs_rows]
     
     return render_template('admin/logs.html', logs=logs)

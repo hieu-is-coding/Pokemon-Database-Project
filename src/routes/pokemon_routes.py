@@ -22,11 +22,13 @@ pokemon_bp = Blueprint('pokemon', __name__, url_prefix='/pokemons')
 @pokemon_bp.route('/', methods=['GET'])
 def get_all_pokemons():
     pokemons = Pokemon.query.all()
+    # pokemons = db.session.execute(text('SELECT * FROM Pokemon')).fetchall()
     return render_template('pokemons/index.html', pokemons=pokemons)
 
 @pokemon_bp.route('/<int:pokemon_id>', methods=['GET'])
 def get_pokemon(pokemon_id):
     pokemon = Pokemon.query.get_or_404(pokemon_id)
+    # pokemon = db.session.execute(text('SELECT * FROM Pokemon WHERE id = :pokemon_id'), {'pokemon_id': pokemon_id}).fetchone()
     return render_template('pokemons/detail.html', pokemon=pokemon)
 
 @pokemon_bp.route('/new', methods=['GET'])
@@ -161,23 +163,26 @@ def update_pokemon(pokemon_id):
 @login_required
 @admin_required
 def delete_pokemon(pokemon_id):
-    pokemon = Pokemon.query.get_or_404(pokemon_id)
-    battles_as_trainer1 = Battle.query.filter(Battle.trainer1_id == pokemon_id).all()
-    battles_as_trainer2 = Battle.query.filter(Battle.trainer2_id == pokemon_id).all()
-
     try:
-        for battle in battles_as_trainer1:
-            db.session.delete(battle)
-        for battle in battles_as_trainer2:
-            db.session.delete(battle)
+        with db.engine.connect() as connection:
+            result = connection.execute(text("SELECT id FROM Pokemon WHERE id = :pokemon_id"), 
+                                     {"pokemon_id": pokemon_id})
+            if not result.fetchone():
+                flash('Pokemon not found', 'error')
+                return redirect(url_for('pokemon.get_all_pokemons'))
 
-        
-        db.session.delete(pokemon)
-        db.session.commit()
-        flash('Pokemon (and related battles) deleted successfully', 'success')
-        return redirect(url_for('pokemon.get_all_pokemons'))
+            # Delete related battles
+            connection.execute(text("DELETE FROM Battle WHERE trainer1_id = :pokemon_id OR trainer2_id = :pokemon_id"),
+                            {"pokemon_id": pokemon_id})
+            
+            # Delete the pokemon
+            connection.execute(text("DELETE FROM Pokemon WHERE id = :pokemon_id"),
+                            {"pokemon_id": pokemon_id})
+            
+            connection.commit()
+            flash('Pokemon (and related battles) deleted successfully', 'success')
+            return redirect(url_for('pokemon.get_all_pokemons'))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error deleting Pokemon: {str(e)}', 'error')
         return redirect(url_for('pokemon.get_all_pokemons'))
 

@@ -8,7 +8,9 @@ It solves the problem of needing a straightforward tool to view, add, modify, an
 
 ---
 
-## Setup Instructions
+## 🖥️ Setup Instructions
+
+*Prefer cmd on Windows, zsh on Mac, anything is fine on Linux*
 
 1. Clone the repository:
 ```
@@ -29,10 +31,22 @@ pip install -r requirements.txt
 
 4. Create new user for access (optional):
 ```
+mysql -u root -p
+
 CREATE USER 'your_mysql_username'@'localhost' IDENTIFIED BY 'your_mysql_password';
 ```
 
-5. Create a `.env` file in the project root with the following content:
+5. Grant full acess to *your_mysql_username*
+```
+mysql -u root -p
+
+CREATE DATABASE IF NOT EXISTS pokemon_db;
+GRANT ALL PRIVILEGES ON pokemon_db.* TO 'your_mysql_username'@'localhost';
+FLUSH PRIVILEGES;
+exit
+```
+
+6. Create a `.env` file in the project root with the following content:
 ```
 DB_USERNAME=your_mysql_username
 DB_PASSWORD=your_mysql_password
@@ -40,20 +54,13 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=pokemon_db
 
-# Other secret key if needed
-SECRET_KEY=your_secret_key
+# This is for password encryption (please change for your safety)
+SECRET_KEY=8f42a73054b1749f8f58848be5e6502c8f42a73054b1749f8f58848be5e6502c
 ```
 
-6. Create the database and add indexes, views, striggers, partitioning:
+7. Create the database and add indexes, views, striggers, partitioning:
 ```
 python3 setup.py
-```
-
-7. Grant full acess to *your_mysql_username*
-```
-mysql -u root -p
-GRANT ALL PRIVILEGES ON pokemon_db.* TO 'your_mysql_username'@'localhost';
-FLUSH PRIVILEGES;
 ```
 
 8. Set up admin for security enhancement (you should remember this login detail)
@@ -73,6 +80,9 @@ python3 main.py
 
 11. Access the application at http://localhost:5000
 
+---
+## 💿 Schema
+[Entity relationship diagram](Document/Pokemon_ERD.png)
 ---
 
 ## 🎯 Functional & Non-functional Requirements  

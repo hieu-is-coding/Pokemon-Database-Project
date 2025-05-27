@@ -81,7 +81,6 @@ def update_ability(ability_id):
         return redirect(url_for('ability.edit_ability_form', ability_id=ability_id))
     
     try:
-        # Update ability using raw SQL
         db.session.execute(text(
             'UPDATE Ability SET ability_name = :name, description = :description WHERE ability_id = :id'),
             {'name': ability_name, 'description': description, 'id': ability_id}
@@ -99,7 +98,6 @@ def update_ability(ability_id):
 @admin_required
 def delete_ability(ability_id):
     try:
-        # Delete ability using raw SQL
         db.session.execute(text('DELETE FROM Ability WHERE ability_id = :id'), {'id': ability_id})
         db.session.commit()
         flash('Ability deleted successfully', 'success')
