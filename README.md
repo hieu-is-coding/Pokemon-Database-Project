@@ -82,7 +82,7 @@ python3 main.py
 
 ---
 ## 💿 Schema
-[Entity relationship diagram](Document/Pokemon_ERD.png)
+![Entity relationship diagram](Document/Pokemon_ERD.png)
 ---
 
 ## 🎯 Functional & Non-functional Requirements  
