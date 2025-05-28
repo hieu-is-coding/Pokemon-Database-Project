@@ -113,9 +113,9 @@ python3 main.py
 - **Maintainability**: Well-structured and commented code with version control (Git/GitHub).  
 - **Security**:
   - Input validation (client + server).
-  - Use **prepared statements** to prevent SQL injection.
-  - _(Course Req)_ Define MySQL user roles (e.g., `app_user`, `admin_user`) with least privilege.  
-  - If authentication is added: encrypt sensitive data.
+  - Use **parameterized queries** to prevent SQL injection.
+  - Define MySQL user roles (e.g., `app_user`, `admin_user`) with least privilege.  
+  - Authentication is added (`werkzeug`, `jwt`) for encrypt sensitive data.
 
 - **Database Standards**: Use MySQL-specific features (SPs, Triggers).  
 - **Normalization**: Aim for **Third Normal Form (3NF)**.  
