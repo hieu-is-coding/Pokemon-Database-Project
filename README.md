@@ -98,11 +98,12 @@ python3 main.py
 
 #### Analytics and Reporting (Basic)
 - At least one **VIEW** to show aggregated/specific data (e.g., Pokemon above a certain attack threshold, total count).
-- _(Future Scope)_ Basic statistics tracking (e.g., average stats), and basic web-based visualizations.
+- Basic statistics tracking includes number of users and entities. 
+- Log views access for admin 
 
 #### Database Features
-- At least **two STORED PROCEDURES** (e.g., add/update Pokemon).
-- At least **one TRIGGER** for audit logging or validation.
+- **two STORED PROCEDURES** 
+- **one TRIGGER**
 
 ### **Non-functional Requirements**
 
@@ -122,35 +123,12 @@ python3 main.py
 
 ---
 
-## 🐱 Expected Core Entities
-
-> _(Initial design includes 1 entity. 4 more entities will be added to satisfy 3NF requirement.)_
-
-### **Pokemon** (Primary Entity)
-| Field       | Type                      | Description                                |
-|-------------|---------------------------|--------------------------------------------|
-| id          | INT, PK, AUTO_INCREMENT    | Unique identifier                          |
-| name        | VARCHAR(100), NOT NULL, UQ| Pokemon name                               |
-| hp          | INT, NOT NULL             | Hit Points stat                            |
-| attack      | INT, NOT NULL             | Attack stat                                |
-| defense     | INT, NOT NULL             | Defense stat                               |
-| created_at  | TIMESTAMP, DEFAULT NOW()  | Created timestamp                          |
-| updated_at  | TIMESTAMP, AUTO-UPDATE    | Last modified timestamp                    |
-
-### **Proposed Expansion Entities**
-- **Trainer**: (`trainer_id` PK, `trainer_name`, `trainer_level`, `pokemon_set`)
-- **Ability**: (`ability_id` PK, `ability_name` UQ, `description`)  
-- **Battle**: (`battle_id` PK, `battle_time`, `winner`)  
-- **Region**: (`region_id` PK, `region_name` UQ)  
-
----
-
 ## ⚙️ Technology
 
 - **Database**: MySQL (Workbench/CLI)  
 - **Backend**: Python + Flask  
-- **DB Connector**: `mysql-connector-python` (prepared statements)  
-- **Frontend**: HTML, Tailwind CSS, JavaScript (Vanilla JS)  
+- **DB Connector**: SQLAlchemy
+- **Frontend**: HTML, CSS, JavaScript 
 - **Runtime**: Python 3.x  
 - **Version Control**: Git / GitHub  
 
